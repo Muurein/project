@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ServiceRamschema } from './service-ramschema';
+import { MyTable } from './my-table';
 
-describe('ServiceRamschema', () => {
-  let component: ServiceRamschema;
-  let fixture: ComponentFixture<ServiceRamschema>;
+describe('MyTable', () => {
+  let component: MyTable;
+  let fixture: ComponentFixture<MyTable>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ServiceRamschema]
+      imports: [MyTable]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ServiceRamschema);
+    fixture = TestBed.createComponent(MyTable);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

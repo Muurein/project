@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ServiceCoursdata } from './service-coursdata';
+import { DataTable } from './data-table';
 
-describe('ServiceCoursdata', () => {
-  let component: ServiceCoursdata;
-  let fixture: ComponentFixture<ServiceCoursdata>;
+describe('DataTable', () => {
+  let component: DataTable;
+  let fixture: ComponentFixture<DataTable>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ServiceCoursdata]
+      imports: [DataTable]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ServiceCoursdata);
+    fixture = TestBed.createComponent(DataTable);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

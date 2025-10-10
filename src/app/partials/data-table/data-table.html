@@ -1,0 +1,43 @@
+<!--sökfält-->
+<mat-form-field>
+    <mat-label>Sök här!</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+</mat-form-field>
+
+<!--data-tabell-->
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <!--kolumner-->
+    <!--kurskod-->
+    <ng-container matColumnDef="coursecode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course code">Kurskod</th>
+        <td mat-cell *matCellDef="let course">{{ course.coursecode }}</td>
+    </ng-container>
+
+    <!--kursnamn-->
+    <ng-container matColumnDef="coursename">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course name">Kursnamn</th>
+        <td mat-cell *matCellDef="let course">{{ course.coursename }}</td>
+    </ng-container>
+
+    <!--kurspoäng-->
+    <ng-container matColumnDef="coursepoints">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course points">Poäng</th>
+        <td mat-cell *matCellDef="let course">{{ course.coursepoints }}</td>
+    </ng-container> 
+
+    <!--ämne-->
+    <ng-container matColumnDef="coursesubject">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course subject">Ämne</th>
+        <td mat-cell *matCellDef="let course">{{ course.coursesubject }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!--om ingen data matchar sökfrasen-->
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="3">Ingen data matchar {{ input.value }}</td>
+    </tr>
+
+</table>
