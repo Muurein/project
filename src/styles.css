@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+}
+
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.1em;
+}
+
+/* huvudmeny */
+nav {
+    background-color: #05C789;
+    color: white;
+    height: 70px;
+}
+
+.main-menu {
+    list-style-type: none;
+    display: flex;
+}
+
+.main-menu li {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-left: 2em;
+    margin-top: 23px;
+}
+
+.main-menu li:hover {
+    cursor: pointer;
+    background-color: #78E9C5;
+}
+
+footer {
+    background-color: #98ccbc;
+    height: 50px;
+}
