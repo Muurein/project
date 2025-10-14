@@ -20,7 +20,7 @@ export class DataTable implements OnInit, AfterViewInit {
 
   //properties & interface
   courses: Course[] = [];
-  displayedColumns: string[] = ["coursecode", "coursename", "coursepoints", "coursesubject"];
+  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject"];
   dataSource = new MatTableDataSource<Course>([]);
 
   //inleder sorteringen
@@ -35,20 +35,27 @@ export class DataTable implements OnInit, AfterViewInit {
 
   //när sidan laddas in
   ngOnInit(): void {
-    this.dataSource.sort = this.sort;
+    
+    this.ServiceCoursedata.getCourses().subscribe((courses) => {
+      
+      this.courses = courses;
+      this.dataSource.data = this.courses;
+    });
   }
 
   //filtrerar datan
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
     this.dataSource.filterPredicate = (data: Course, filter: string) => {
+      
       const searchInput = filter.split(' ');
 
       return searchInput.every(term =>
-        data.coursecode.toLowerCase().includes(term) ||
-        data.coursename.toLowerCase().includes(term) ||
-        data.coursepoints.toLowerCase().includes(term) ||
-        data.coursesubject.toLowerCase().includes(term)
+        data.courseCode.toLowerCase().includes(term) ||
+        data.courseName.toLowerCase().includes(term) ||
+        data.subject.toLowerCase().includes(term)
       );
     };
   }

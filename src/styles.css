@@ -33,6 +33,7 @@ nav {
 }
 
 footer {
-    background-color: #98ccbc;
+    background-color: white;
     height: 50px;
+    border-top: 1px solid black;
 }

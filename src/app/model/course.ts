@@ -1,6 +1,6 @@
 export interface Course {
-    coursecode: string,
-    coursename: string,
-    coursepoints: string,
-    coursesubject: string
+    courseCode: string,
+    courseName: string,
+    points: number,
+    subject: string
 }
