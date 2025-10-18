@@ -1,7 +1,17 @@
-<!--sökfält-->
+<!--sök/filtrera kurser-->
 <mat-form-field>
-    <mat-label>Sök här!</mat-label>
+    <mat-label>Filtrera bland kurser</mat-label>
     <input matInput (keyup)="applyFilter($event)" #input>
+</mat-form-field>
+
+<!--filtrera efter ämne-->
+<mat-form-field>
+    <mat-label>Filtrera efter ämne</mat-label>
+    <mat-select [(ngModel)]="selectedValue" name="subjectFilter"> 
+        <mat-option *ngFor="let course of courses" [value]="course.subject">
+            {{ course.subject }}
+        </mat-option>
+    </mat-select>
 </mat-form-field>
 
 <!--data-tabell-->
@@ -30,6 +40,13 @@
     <ng-container matColumnDef="subject">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course subject">Ämne</th>
         <td mat-cell *matCellDef="let course">{{ course.subject }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Lägg till i ramschema</th>
+        <td mat-cell *matCellDef="let course">
+            <button mat-button (click)=" addCourseToMyTable(course)">Lägg till</button>
+        </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

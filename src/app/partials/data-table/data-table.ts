@@ -5,13 +5,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 import { Course } from '../../model/course';
 import { ServiceCoursedata } from '../../services/coursedata/service-coursedata';
+import { ServiceRamschema } from '../../services/ramschema/service-ramschema';
+
 
 
 @Component({
   selector: 'app-data-table',
-  imports: [CommonModule, MatTableModule, MatCellDef, MatInputModule, MatSortModule, MatFormFieldModule, MatButtonModule],
+  imports: [CommonModule, MatTableModule, MatCellDef, MatInputModule, MatSortModule, MatFormFieldModule, MatButtonModule, MatSelectModule, FormsModule],
   templateUrl: './data-table.html',
   styleUrl: './data-table.css'
 })
@@ -20,8 +24,9 @@ export class DataTable implements OnInit, AfterViewInit {
 
   //properties & interface
   courses: Course[] = [];
-  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject"];
+  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject", "addButton"];
   dataSource = new MatTableDataSource<Course>([]);
+  selectedValue: string = "";
 
   //inleder sorteringen
   @ViewChild(MatSort) sort!: MatSort;
@@ -31,7 +36,10 @@ export class DataTable implements OnInit, AfterViewInit {
   }
 
   //konstruktorn
-  constructor(private ServiceCoursedata: ServiceCoursedata) {}
+  constructor(
+    private ServiceCoursedata: ServiceCoursedata,
+    private ServiceRamschema: ServiceRamschema
+  ) {}
 
   //när sidan laddas in
   ngOnInit(): void {
@@ -42,6 +50,12 @@ export class DataTable implements OnInit, AfterViewInit {
       this.dataSource.data = this.courses;
     });
   }
+
+  //lägg till kurs till ramschemat
+  addCourseToMyTable(course: Course) {
+    this.ServiceRamschema.addCourse(course);
+  }
+
 
   //filtrerar datan
   applyFilter(event: Event) {
