@@ -26,7 +26,7 @@ export class MyTable implements OnInit, AfterViewInit {
   myCourses: Course[] = [];
   displayedColumns: string[] = ["courseCode", "courseName", "points", "subject"];
   dataSource = new MatTableDataSource<Course>(this.myCourses);
-
+  selectedValue: string = "";
 
   //inleder sorteringen
   @ViewChild(MatSort) sort!: MatSort;
@@ -55,6 +55,7 @@ export class MyTable implements OnInit, AfterViewInit {
     this.serviceRamschema.addCourse(course);
     this.myCourses = this.serviceRamschema.getCourses();
     this.dataSource.data = this.myCourses;
+    console.log("Kurs tillagd");
   }
 
   //filtrerar datan
@@ -79,5 +80,10 @@ export class MyTable implements OnInit, AfterViewInit {
     this.displayedColumns.forEach(column => {
       this.sort.sort({id: column, start: direction, disableClear: true});
     });
-  };
+  }
+
+  //räkna ihop det totala antalet högskolepoäng kurserna i ramschemat har
+  calculateTotalPoints(): number {
+    return this.myCourses.reduce((sum, course) => sum + course.points, 0);
+  }
 }

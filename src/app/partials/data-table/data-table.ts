@@ -24,7 +24,7 @@ export class DataTable implements OnInit, AfterViewInit {
 
   //properties & interface
   courses: Course[] = [];
-  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject", "addButton"];
+  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject", "actions"];
   dataSource = new MatTableDataSource<Course>([]);
   selectedValue: string = "";
 
@@ -53,7 +53,21 @@ export class DataTable implements OnInit, AfterViewInit {
 
   //lägg till kurs till ramschemat
   addCourseToMyTable(course: Course) {
-    this.ServiceRamschema.addCourse(course);
+    //hämtar nuvarande kurser
+    const currentCourses = this.ServiceRamschema.getCourses();
+
+    //finns kursen redan?
+    const courseExists = currentCourses.some((existingCourse) => {
+      existingCourse.courseCode === course.courseCode;
+    });
+
+    //meddelanden till användaren
+    if (courseExists) {
+      alert("Kursen är redan tillagd. Du kan inte lägga till den igen-");
+    } else {
+      this.ServiceRamschema.addCourse(course);
+      console.log("Kurs tillagd");
+    }
   }
 
 

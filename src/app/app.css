@@ -3,3 +3,14 @@ main {
     margin-left: 2%;
     padding: 1em;
 }
+
+footer {
+    background-color: #05C789;
+    color: white;
+    height: 50px;
+    padding: 1em;
+}
+
+footer p {
+    margin-left: 0.5em;
+}

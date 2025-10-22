@@ -42,15 +42,13 @@
         <td mat-cell *matCellDef="let course">{{ course.subject }}</td>
     </ng-container>
 
+    <!--lägg till-knapp-->
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Lägg till i ramschema</th>
         <td mat-cell *matCellDef="let course">
-            <button mat-button (click)=" addCourseToMyTable(course)">Lägg till</button>
+            <button mat-button (click)=" addCourseToMyTable(course)" id="addButton">Lägg till</button>
         </td>
     </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     <!--om ingen data matchar sökfrasen-->
     <tr class="mat-row" *matNoDataRow>

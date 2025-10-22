@@ -4,6 +4,16 @@
     <input matInput (keyup)="applyFilter($event)" #input>
 </mat-form-field>
 
+<!--filtrera efter ämne-->
+<mat-form-field>
+    <mat-label>Filtrera efter ämne</mat-label>
+    <mat-select [(ngModel)]="selectedValue" name="subjectFilter"> 
+        <mat-option *ngFor="let course of myCourses" [value]="course.subject">
+            {{ course.subject }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
 <!--data-tabell-->
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -35,6 +45,15 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
+    
+    <!--ta bort-knapp-->
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Ta bort kurs</th>
+        <td mat-cell *matCellDef="let course">
+            <button mat-button (click)=" addCourseToMyTable(course)" id="addButton">Ta bort</button>
+        </td>
+    </ng-container>
+
     <!--om ingen data matchar sökfrasen-->
     <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="3">Ingen data matchar {{ input.value }}</td>
@@ -42,3 +61,7 @@
 
 </table>
 
+<!--totala poängen av kurser i ramschemat-->
+<p *ngIf="dataSource.data.length > 0" class="total-points">
+    <b>Totalt antal poäng: </b> {{ calculateTotalPoints() }}
+</p>
