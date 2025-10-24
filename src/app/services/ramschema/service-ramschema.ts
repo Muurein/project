@@ -8,10 +8,6 @@ import { Course } from '../../model/course';
 export class ServiceRamschema {
   private readonly STORAGE_KEY = "ramschema_courses"
 
-  //lägg till kurs i tabellen från service-coursedata & show-courses
-
-  //validerar om kursen redan finns != kan inte lägga till kursen
-
   //spara till localStorage
   saveCourses(courses: Course[]):void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(courses));
@@ -24,22 +20,31 @@ export class ServiceRamschema {
       return courses ? JSON.parse(courses): [];
     }
   
-  //lägg till kurs i localStorage
-  addCourse(course: Course): void {
-    const courses = this.getCourses();
 
-    //validering
-    if(!courses.some(c => c.courseCode === course.courseCode)) {
-      courses.push(course);
-      this.saveCourses(courses);
+  //lägg till kurs i localStorage
+    addCourse(course: Course): void {
+      const courses = this.getCourses();
+
+      //finns kursen redan i localStorage?
+      if(!courses.some(c => c.courseCode === course.courseCode)) {
+        
+        courses.push(course);
+        this.saveCourses(courses);
+
+        alert("Kurs tillagd");
+      } else {
+        alert("Kurs är redan tillagd");
+      }
     }
-  }
+
 
   //ta bort kurs från localStorage
-  removeCourse(courseCode: string): void {
+  deleteCourse(courseCode: string): void {
     let courses = this.getCourses();
     courses = courses.filter(course => course.courseCode !== courseCode);
     this.saveCourses(courses);
+
+    alert("Kursen är borttagen!");
   }
 
 }

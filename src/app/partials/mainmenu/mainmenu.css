@@ -1,8 +1,18 @@
 /* huvudmeny */
+header {
+    display: flex;
+}
+
 nav {
-    background-color: #05C789;
+    background-color: #9c2525;
     color: white;
-    height: 70px;
+    height: 100px;
+    width: 100%;
+}
+
+img {
+    width: auto;
+    height: 100px;
 }
 
 .main-menu {
@@ -13,11 +23,23 @@ nav {
 .main-menu li {
     font-weight: bold;
     font-size: 1.2em;
-    margin-left: 2em;
-    margin-top: 23px;
+    margin-left: 1em;
+    margin-right: 1.5em;
+    margin-top: 37px;
 }
 
 .main-menu li:hover {
     cursor: pointer;
-    background-color: #78E9C5;
+    text-decoration: 3px white underline;
 }
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    
+}
+

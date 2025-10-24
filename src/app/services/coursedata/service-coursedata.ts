@@ -21,18 +21,4 @@ export class ServiceCoursedata {
     return this.http.get<Course[]>(this.url);
   }
 
-
-  // title = "example";
-  // Courses: any;
-  // const url = ["/public/miun_courses.json"];
-  // // url: string = "public/miu"
-
-  // // constructor(private http: HttpClient) {
-
-  // // } 
-
-  // // //hämta kurser
-  // // getCourses(): Observable<Course[]> {
-  // //   return this.http.get<Course[]>(this.url);
-  // // }
 }

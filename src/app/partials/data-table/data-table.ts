@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { Course } from '../../model/course';
 import { ServiceCoursedata } from '../../services/coursedata/service-coursedata';
 import { ServiceRamschema } from '../../services/ramschema/service-ramschema';
+import { filter } from 'rxjs';
 
 
 
@@ -24,9 +25,12 @@ export class DataTable implements OnInit, AfterViewInit {
 
   //properties & interface
   courses: Course[] = [];
+  categories: Course[] = [];
   displayedColumns: string[] = ["courseCode", "courseName", "points", "subject", "actions"];
   dataSource = new MatTableDataSource<Course>([]);
   selectedValue: string = "";
+  searchString: string = "";
+  categoryFilter: string = "";
 
   //inleder sorteringen
   @ViewChild(MatSort) sort!: MatSort;
@@ -47,34 +51,51 @@ export class DataTable implements OnInit, AfterViewInit {
     this.ServiceCoursedata.getCourses().subscribe((courses) => {
       
       this.courses = courses;
+
+      //fitlrerar bort dublettämnen i filtreringen
+      this.categories = courses.filter((value, index, Array) =>
+      index == Array.findIndex(course => course.subject == value.subject));
+      
+
       this.dataSource.data = this.courses;
     });
   }
 
   //lägg till kurs till ramschemat
-  addCourseToMyTable(course: Course) {
-    //hämtar nuvarande kurser
+  addCourseToMyTable(course: Course): void {
+  
+    this.ServiceRamschema.addCourse(course);
     const currentCourses = this.ServiceRamschema.getCourses();
-
-    //finns kursen redan?
     const courseExists = currentCourses.some((existingCourse) => {
       existingCourse.courseCode === course.courseCode;
     });
-
-    //meddelanden till användaren
-    if (courseExists) {
-      alert("Kursen är redan tillagd. Du kan inte lägga till den igen-");
-    } else {
-      this.ServiceRamschema.addCourse(course);
-      console.log("Kurs tillagd");
-    }
   }
 
 
   //filtrerar datan
-  applyFilter(event: Event) {
+  applySearch(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.searchString = filterValue;
+    // this.dataSource.filter = filterValue.trim().toLowerCase(); 
+
+    // this.dataSource.filterPredicate = (data: Course, filter: string) => {
+      
+    //   const searchInput = filter.split(' ');
+
+    //   return searchInput.every(term =>
+    //     data.courseCode.toLowerCase().includes(term) ||
+    //     data.courseName.toLowerCase().includes(term) ||
+    //     data.subject.toLowerCase().includes(term)
+    //   );
+    // };
+    this.applyFilter();
+  }
+
+
+  applyFilter() {
+    //this.dataSource.filter = filterValue.trim().toLowerCase(); 
+    //validering - tom sträng ska inte betyda att alal resutlat försvinner
+    
 
     this.dataSource.filterPredicate = (data: Course, filter: string) => {
       
@@ -88,10 +109,24 @@ export class DataTable implements OnInit, AfterViewInit {
     };
   }
 
+
+  applyCategory(event: Event)  {
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue);
+    this.categoryFilter = filterValue;
+
+    this.applyFilter();
+  }
+
   //sorteringen
   sortCourses(direction: "desc") {
     this.displayedColumns.forEach(column => {
       this.sort.sort({id: column, start: direction, disableClear: true});
     });
   };
+
+  //visar hur många kurser som hittats
+  calculateTotalCourses(): number {
+    return this.courses.reduce((sum, course) => sum + course.length, 0)
+  }
 }

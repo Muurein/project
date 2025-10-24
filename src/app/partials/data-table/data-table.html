@@ -1,18 +1,25 @@
-<!--sök/filtrera kurser-->
-<mat-form-field>
-    <mat-label>Filtrera bland kurser</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input>
-</mat-form-field>
+<div class="filter-table-div">
+    <!--sök/filtrera kurser-->
+    <mat-form-field class="search">
+        <mat-label>Sök här</mat-label>
+        <input matInput (keyup)="applySearch($event)" #input>
+    </mat-form-field>
 
-<!--filtrera efter ämne-->
-<mat-form-field>
-    <mat-label>Filtrera efter ämne</mat-label>
-    <mat-select [(ngModel)]="selectedValue" name="subjectFilter"> 
-        <mat-option *ngFor="let course of courses" [value]="course.subject">
-            {{ course.subject }}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
+    <!--filtrera efter ämne-->
+    <mat-form-field class="filter">
+        <mat-label>Filtrera efter ämne</mat-label>
+        <mat-select [(ngModel)]="selectedValue" name="subjectFilter" (ngmodelchange)="applyCategory($event)"> 
+            <mat-option *ngFor="let course of categories"  [value]="course.subject" >
+                {{ course.subject }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <!--totala poängen av kurser i ramschemat-->
+    <p *ngIf="dataSource.data.length > 0" class="total-courses">
+    <b>Kurser hittade: </b> {{ calculateTotalCourses() }}
+</p>
+</div>
 
 <!--data-tabell-->
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -20,33 +27,36 @@
     <!--kolumner-->
     <!--kurskod-->
     <ng-container matColumnDef="courseCode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course code">Kurskod</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course code" class="table-header">Kurskod</th>
         <td mat-cell *matCellDef="let course">{{ course.courseCode }}</td>
     </ng-container>
 
     <!--kursnamn-->
     <ng-container matColumnDef="courseName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course name">Kursnamn</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course name" class="table-header">Kursnamn</th>
         <td mat-cell *matCellDef="let course">{{ course.courseName }}</td>
     </ng-container>
 
     <!--kurspoäng-->
     <ng-container matColumnDef="points">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course points">Poäng</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course points" class="table-header">Poäng</th>
         <td mat-cell *matCellDef="let course">{{ course.points }}</td>
     </ng-container> 
 
     <!--ämne-->
     <ng-container matColumnDef="subject">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course subject">Ämne</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by course subject" class="table-header">Ämne</th>
         <td mat-cell *matCellDef="let course">{{ course.subject }}</td>
     </ng-container>
 
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
     <!--lägg till-knapp-->
     <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Lägg till i ramschema</th>
-        <td mat-cell *matCellDef="let course">
-            <button mat-button (click)=" addCourseToMyTable(course)" id="addButton">Lägg till</button>
+        <th mat-header-cell *matHeaderCellDef class="table-header">Lägg till i ramschema</th>
+        <td mat-cell *matCellDef="let course" class="add-button">
+            <button mat-button (click)="addCourseToMyTable(course)" id="addButton">Lägg till</button>
         </td>
     </ng-container>
 

@@ -1,3 +1,48 @@
 table {
     padding: 1em;
 }
+
+/* sökfält */
+.search {
+    border-top: 1px solid black;
+}
+
+/* filtrera efter ämne */
+.filter {
+    margin-left: 3em;
+    border-top: 1px solid black;
+}
+
+.table-header {
+    font-weight: bold;
+}
+
+.add-button {
+    background-color: rgb(53, 53, 53);
+    color: white;
+    text-align: center;
+    width: 50px;
+}
+
+.add-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.filter-table-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.filter-table-div .search, .filter-table-div .filter {
+    margin-left: 0px;
+    margin-right: 80px;
+    margin-top: 20px;
+}
+
+
+
+
+
+

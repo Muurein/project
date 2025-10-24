@@ -5,10 +5,11 @@ main {
 }
 
 footer {
-    background-color: #05C789;
+    background-color: #9c2525;
     color: white;
     height: 50px;
     padding: 1em;
+    text-align: center;
 }
 
 footer p {

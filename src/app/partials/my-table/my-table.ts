@@ -24,7 +24,8 @@ export class MyTable implements OnInit, AfterViewInit {
 
   //properties & interface
   myCourses: Course[] = [];
-  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject"];
+  myCategories: Course[] = [];
+  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject", "actions"];
   dataSource = new MatTableDataSource<Course>(this.myCourses);
   selectedValue: string = "";
 
@@ -43,8 +44,10 @@ export class MyTable implements OnInit, AfterViewInit {
 
   //när sidan laddas in
   ngOnInit(): void {
-    
+
     this.myCourses = this.serviceRamschema.getCourses();
+
+    this.updateCategories();
 
     this.dataSource.data = this.myCourses;
 
@@ -52,10 +55,20 @@ export class MyTable implements OnInit, AfterViewInit {
 
   //lägg till kurs till ramschema
   addCourseToMyTable(course: Course): void {
+    
     this.serviceRamschema.addCourse(course);
     this.myCourses = this.serviceRamschema.getCourses();
     this.dataSource.data = this.myCourses;
-    console.log("Kurs tillagd");
+
+  }
+
+
+  //ta bort kurs från ramschema
+  deleteCourse(course: Course): void {
+    this.serviceRamschema.deleteCourse(course.courseCode);
+    this.myCourses = this.serviceRamschema.getCourses();
+    this.dataSource.data = this.myCourses;
+
   }
 
   //filtrerar datan
@@ -80,6 +93,12 @@ export class MyTable implements OnInit, AfterViewInit {
     this.displayedColumns.forEach(column => {
       this.sort.sort({id: column, start: direction, disableClear: true});
     });
+  }
+
+  //fitlrerar bort dublettämnen i filtreringen
+  updateCategories() {
+    this.myCategories = this.myCourses.filter((value, index, Array) =>
+    index == Array.findIndex(course => course.subject == value.subject));
   }
 
   //räkna ihop det totala antalet högskolepoäng kurserna i ramschemat har
