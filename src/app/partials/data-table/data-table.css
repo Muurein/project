@@ -1,32 +1,11 @@
-table {
-    padding: 1em;
-}
-
 /* sökfält */
 .search {
     border-top: 1px solid black;
 }
 
-/* filtrera efter ämne */
 .filter {
     margin-left: 3em;
     border-top: 1px solid black;
-}
-
-.table-header {
-    font-weight: bold;
-}
-
-.add-button {
-    background-color: rgb(53, 53, 53);
-    color: white;
-    text-align: center;
-    width: 50px;
-}
-
-.add-button:hover {
-    background-color: white;
-    color: black;
 }
 
 .filter-table-div {
@@ -41,7 +20,72 @@ table {
     margin-top: 20px;
 }
 
+.filter-table-div p {
+    margin-left: 0px;
+    margin-right: 110px;
+    margin-top: 20px; 
+    margin-bottom: 30px;
+}
 
+
+
+/* tabell */
+table {
+    padding: 1em;
+    width: 70%;
+    min-width: 600px;
+}
+
+.table-div {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-header {
+    font-weight: bold;
+}
+
+/* knapp */
+.add-button {
+    background-color: rgb(53, 53, 53);
+    color: white;
+    text-align: center;
+    width: 50px;
+}
+
+.add-button:hover {
+    background-color: white;
+    color: black;
+}
+
+
+.mat-select-panel {
+    background-color: aqua !important; /* FUNAKR INTE */
+}
+
+/* place scroll-bar on top of table */
+.parent {
+  transform: rotateX(180deg);
+  overflow-x: auto;
+} 
+.child {
+  transform: rotateX(180deg);
+}
+
+
+
+/* DESKTOP */
+@media (min-width: 1024px) {
+
+    .filter-table-div {
+        display: inline-block;
+    }
+
+    .filter-table-div .search, .filter-table-div .filter {
+        margin-right: 40px;
+    }
+
+}
 
 
 

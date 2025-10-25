@@ -2,18 +2,23 @@
     <!--sökfält-->
     <mat-form-field class="search">
         <mat-label>Sök här!</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input>
+        <input matInput (keyup)="searchFilter($event)" #input>
     </mat-form-field>
 
     <!--filtrera efter ämne-->
     <mat-form-field class="filter">
         <mat-label>Filtrera efter ämne</mat-label>
-        <mat-select [(ngModel)]="selectedValue" name="subjectFilter"> 
+        <mat-select [(ngModel)]="selectedValue" name="subjectFilter" (selectionChange)="subjectFilter($event.value)"> 
             <mat-option *ngFor="let course of myCategories" [value]="course.subject">
                 {{ course.subject }}
             </mat-option>
         </mat-select>
     </mat-form-field>
+
+    <!--kurser i sökningen-->
+    <p *ngIf="dataSource.data.length > 0" class="total-courses">
+        <b>Kurser hittade: </b> {{ calculateTotalCourses() }}
+    </p> 
 </div>
 
 <!--data-tabell-->

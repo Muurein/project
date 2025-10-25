@@ -30,7 +30,7 @@ export class DataTable implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Course>([]);
   selectedValue: string = "";
   searchString: string = "";
-  categoryFilter: string = "";
+  subjectCategory: string = "";
 
   //inleder sorteringen
   @ViewChild(MatSort) sort!: MatSort;
@@ -72,30 +72,12 @@ export class DataTable implements OnInit, AfterViewInit {
   }
 
 
-  //filtrerar datan
-  applySearch(event: Event) {
+  //filtrerar datan efter input i sökfältet
+  searchFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchString = filterValue;
-    // this.dataSource.filter = filterValue.trim().toLowerCase(); 
-
-    // this.dataSource.filterPredicate = (data: Course, filter: string) => {
-      
-    //   const searchInput = filter.split(' ');
-
-    //   return searchInput.every(term =>
-    //     data.courseCode.toLowerCase().includes(term) ||
-    //     data.courseName.toLowerCase().includes(term) ||
-    //     data.subject.toLowerCase().includes(term)
-    //   );
-    // };
-    this.applyFilter();
-  }
-
-
-  applyFilter() {
-    //this.dataSource.filter = filterValue.trim().toLowerCase(); 
-    //validering - tom sträng ska inte betyda att alal resutlat försvinner
-    
+    this.dataSource.filter = this.searchString;
+    this.dataSource.filter = filterValue.trim().toLowerCase(); 
 
     this.dataSource.filterPredicate = (data: Course, filter: string) => {
       
@@ -109,13 +91,14 @@ export class DataTable implements OnInit, AfterViewInit {
     };
   }
 
+  //dropdown-meny för ämnessortering
+  subjectFilter(event: string)  {
+    this.subjectCategory = event.trim().toLowerCase();
+    this.dataSource.filterPredicate = (data: Course, filter: string) => {
+      return data.subject.toLowerCase() === this.subjectCategory;
+    }
 
-  applyCategory(event: Event)  {
-    const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue);
-    this.categoryFilter = filterValue;
-
-    this.applyFilter();
+    this.dataSource.filter = " ";
   }
 
   //sorteringen
@@ -127,6 +110,6 @@ export class DataTable implements OnInit, AfterViewInit {
 
   //visar hur många kurser som hittats
   calculateTotalCourses(): number {
-    return this.courses.reduce((sum, course) => sum + course.length, 0)
+    return this.dataSource.filteredData.length;
   }
 }

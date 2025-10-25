@@ -28,6 +28,9 @@ export class MyTable implements OnInit, AfterViewInit {
   displayedColumns: string[] = ["courseCode", "courseName", "points", "subject", "actions"];
   dataSource = new MatTableDataSource<Course>(this.myCourses);
   selectedValue: string = "";
+  searchString: string = "";
+  subjectCategory: string = "";
+
 
   //inleder sorteringen
   @ViewChild(MatSort) sort!: MatSort;
@@ -71,10 +74,12 @@ export class MyTable implements OnInit, AfterViewInit {
 
   }
 
-  //filtrerar datan
-  applyFilter(event: Event) {
+    //filtrerar datan efter input i sökfältet
+  searchFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.searchString = filterValue;
+    this.dataSource.filter = this.searchString;
+    this.dataSource.filter = filterValue.trim().toLowerCase(); 
 
     this.dataSource.filterPredicate = (data: Course, filter: string) => {
       
@@ -87,6 +92,33 @@ export class MyTable implements OnInit, AfterViewInit {
       );
     };
   }
+
+  //dropdown-meny för ämnessortering
+  subjectFilter(event: string)  {
+    this.subjectCategory = event.trim().toLowerCase();
+    this.dataSource.filterPredicate = (data: Course, filter: string) => {
+      return data.subject.toLowerCase() === this.subjectCategory;
+    }
+
+    this.dataSource.filter = " ";
+  }
+
+  // //filtrerar datan
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  //   this.dataSource.filterPredicate = (data: Course, filter: string) => {
+      
+  //     const searchInput = filter.split(' ');
+
+  //     return searchInput.every(term =>
+  //       data.courseCode.toLowerCase().includes(term) ||
+  //       data.courseName.toLowerCase().includes(term) ||
+  //       data.subject.toLowerCase().includes(term)
+  //     );
+  //   };
+  // }
 
   //sorterar datan
   sortCourses(direction: "desc") {
@@ -101,8 +133,15 @@ export class MyTable implements OnInit, AfterViewInit {
     index == Array.findIndex(course => course.subject == value.subject));
   }
 
+  //visar hur många kurser som hittats
+  calculateTotalCourses(): number {
+    return this.dataSource.filteredData.length;
+  }
+  
   //räkna ihop det totala antalet högskolepoäng kurserna i ramschemat har
   calculateTotalPoints(): number {
     return this.myCourses.reduce((sum, course) => sum + course.points, 0);
   }
+
+  
 }
