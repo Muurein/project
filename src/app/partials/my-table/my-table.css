@@ -46,6 +46,18 @@ table {
 
 
 
+/* DESKTOP */
+@media (min-width: 1024px) {
+
+    .filter-table-div {
+        display: inline-block;
+    }
+
+    .filter-table-div .search, .filter-table-div .filter {
+        margin-right: 40px;
+    }
+
+}
 
 
 

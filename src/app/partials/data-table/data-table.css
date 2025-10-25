@@ -59,7 +59,7 @@ table {
 }
 
 
-/* place scroll-bar on top of table */
+/* placerar bläddringsfunktionen överst i tabellen */
 .parent {
   transform: rotateX(180deg);
   overflow-x: auto;
