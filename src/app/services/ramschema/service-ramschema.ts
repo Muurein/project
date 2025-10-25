@@ -25,7 +25,7 @@ export class ServiceRamschema {
     addCourse(course: Course): void {
       const courses = this.getCourses();
 
-      //finns kursen redan i localStorage?
+      //finns kursen redan i localStorage? Om ja, lägg inte till den
       if(!courses.some(c => c.courseCode === course.courseCode)) {
         
         courses.push(course);

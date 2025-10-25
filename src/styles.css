@@ -14,19 +14,3 @@ main {
     margin-left: 2%;
     padding: 1em;
 }
-
-
-footer {
-    background-color: #9c2525;
-    color: white;
-    height: 50px;
-    width: 100%;
-    padding: 1em;
-    text-align: center;
-    position: sticky;
-    bottom: 0;
-}
-
-footer p {
-    margin-left: 0.5em;
-}

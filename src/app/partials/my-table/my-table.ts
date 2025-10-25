@@ -74,7 +74,7 @@ export class MyTable implements OnInit, AfterViewInit {
 
   }
 
-    //filtrerar datan efter input i sökfältet
+  //filtrerar datan efter input i sökfältet
   searchFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchString = filterValue;
@@ -103,22 +103,6 @@ export class MyTable implements OnInit, AfterViewInit {
     this.dataSource.filter = " ";
   }
 
-  // //filtrerar datan
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-
-  //   this.dataSource.filterPredicate = (data: Course, filter: string) => {
-      
-  //     const searchInput = filter.split(' ');
-
-  //     return searchInput.every(term =>
-  //       data.courseCode.toLowerCase().includes(term) ||
-  //       data.courseName.toLowerCase().includes(term) ||
-  //       data.subject.toLowerCase().includes(term)
-  //     );
-  //   };
-  // }
 
   //sorterar datan
   sortCourses(direction: "desc") {
